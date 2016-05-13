@@ -56,4 +56,6 @@ void   display_vmdata(t_vmdata *data);
 char	*ft_strjoin_free(char *s1, char *s2);
 void    ft_filler(t_vmdata *vm_data);
 int     test_piece(int i, int n, t_vmdata *vm_data);
+void 	ft_print_piece(t_tpiece *p);
+void    print_filldata(t_filldata *f);
 #endif

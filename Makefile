@@ -16,7 +16,8 @@ FLAGS = -Wall -Wextra -Werror
 
 SRCDIR = src/
 
-SRC = 	$(SRCDIR)filler.c $(SRCDIR)helper.c $(SRCDIR)operator.c
+SRC = 	$(SRCDIR)filler.c $(SRCDIR)helper.c $(SRCDIR)operator.c\
+$(SRCDIR)artif_int.c
 
 YELLOW	=	\033[1;33m
 GREN	=	\033[32m

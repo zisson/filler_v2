@@ -1,5 +1,26 @@
 #include "filler.h"
 
+char	*ft_strjoin_free(char *s1, char *s2)
+{
+	char	*join;
+
+	join = NULL;
+	if (s1 == NULL && s2 == NULL)
+		return (NULL);
+	else if (s1 == NULL)
+		return (ft_strdup(s2));
+	else if (s2 == NULL)
+		return (ft_strdup(s1));
+	if ((join = (char *)malloc(sizeof(char) * (ft_strlen(s1)
+						+ ft_strlen(s2) + 1))) == NULL)
+		return (NULL);
+	ft_strcpy(join, s1);
+	ft_strcat(join, s2);
+	ft_strdel(&s1);
+	ft_strdel(&s2);
+	return (join);
+}
+
 void    get_vm_piece(t_vmdata *vm_data)
 {
     int     i;
@@ -11,9 +32,9 @@ void    get_vm_piece(t_vmdata *vm_data)
     {
         get_next_line(0, &str);
         vm_data->piece = ft_strjoin_free(vm_data->piece, str);
-        i++;
+		i++;
     }
-    ft_filler(vm_data);
+	ft_filler(vm_data);
 }
 
 void    get_vm_info(t_vmdata *vm_data)
@@ -34,7 +55,6 @@ void    get_vm_info(t_vmdata *vm_data)
         }
         i++;
     }
-
 }
 
 void    check_vminfo(char **line, t_vmdata *vm_data)
@@ -63,6 +83,7 @@ int     main(void)
     char        *line;
     t_vmdata    data;
 
+    line = NULL;
     while (get_next_line(0, &line))
     {
         if (ft_strncmp(line, "$$$ exec p1 : [", 15) == 0)

@@ -21,11 +21,11 @@ int     test_piece(int i, int n, t_vmdata *vm_data)
     t_tpiece	p;
 
 	p.touch = 0;
+    p.c = 0;
 	p.x_center = n % vm_data->psize_x;
 	p.y_center = n / vm_data->psize_x;
 	p.x_i = i % vm_data->mapsize_x;
 	p.y_i = i / vm_data->mapsize_x;
-	p.c = 0;
 	while ((vm_data->piece)[p.c])
 	{
 		if ((vm_data->piece)[p.c] == '*')
