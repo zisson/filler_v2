@@ -14,6 +14,7 @@ void    display_grid(t_grid *grid)
         return ;
     while (grid->g[i])
     {
+        ft_putendl("Debeug");
         ft_putstr_fd(grid->g[i], 1);
         i++;
     }
@@ -35,12 +36,7 @@ void    display_filler(t_filler *f)
     ft_putstr_fd("\nf->my_id: ", 1);
     ft_putstr_fd(f->my_id, 1);
     ft_putchar_fd('\n', 1);
-    if (!(f->grid.g))
-        return ;
-    while ((f->grid.g[i]))
-    {
-        ft_putstr_fd(f->grid.g[i], 1);
-        i++;
-    }
+    display_grid(&f->form);
+    display_grid(&f->grid);
     ft_putchar_fd('\n', 1);
 }
