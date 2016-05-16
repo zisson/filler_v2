@@ -15,7 +15,11 @@
 
 # include <string.h>
 # include <unistd.h>
-# define BUF_SIZE 4096
+# define GNL_BUFF_SIZE			32
+# define FT_ABS( x )				( ( (x) < 0 ) ? -(x) : (x) )
+# define FT_MIN( a, b )			( ( (a) < (b) ) ? (a) : (b) )
+# define FT_MAX( a, b )			( ( (a) < (b) ) ? (b) : (a) )
+# define FT_SWAP( a, b, type )	{ type c = (a); (a) = (b); (b) = c; }
 
 # define BLACK    "\033[1;30m"
 # define RED      "\033[1;31m"
@@ -27,14 +31,7 @@
 # define GREY     "\033[1;37m"
 # define DEFAULT_COLOR "\033[0;m"
 
-typedef struct		s_read
-{
-	int				size;
-	int				index;
-	int				fd;
-	char			*to_read;
-	struct s_read	*next;
-}					t_read;
+typedef unsigned char	t_uchar;
 
 int					get_next_line(int fd, char **line);
 
@@ -74,6 +71,7 @@ void				*ft_memmove(void *dst, const void *src, size_t n);
 void				*ft_memchr(const void *s, int c, size_t n);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
 void				*ft_memalloc(size_t size);
+void				*ft_memrealloc(void *s, size_t old_n, size_t new_n);
 void				ft_memdel(void **ap);
 char				*ft_strrealloc(char *ptr, size_t size);
 char				*ft_strnew(size_t size);

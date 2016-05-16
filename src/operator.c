@@ -1,43 +1,72 @@
 #include "filler.h"
 
-static int  test_piece_algo(t_tpiece *p, t_vmdata *vm_data)
+void	free_grid(t_grid *grid)
 {
-    if ((p->pos_content = (vm_data->map)[(p->y_pos * vm_data->mapsize_x) + p->x_pos]) != '.')
-    {
-        if (p->pos_content == vm_data->player_id || p->pos_content == vm_data->player_id + 32)
-        {
-            p->touch++;
-            if (p->touch > 1)
-                return (0);
-        }
-        else
-            return (0);
-    }
-    return (1);
+	int	i;
+	int	sizei;
+
+	if (grid->g)
+	{
+		i = 0;
+		sizei = grid->hig;
+		while (++i < sizei)
+			ft_memdel((void **)&grid->g[i++]);
+		ft_memdel((void **)&grid->g);
+	}
+	grid->hig = 0;
+	grid->wid = 0;
 }
 
-int     test_piece(int i, int n, t_vmdata *vm_data)
+int		free_filler(t_filler *f, char **line)
 {
-    t_tpiece	p;
+	f->all_id[0] = 0;
+	f->all_id[1] = 0;
+	f->my_id[0] = 0;
+	f->my_id[1] = 0;
+	free_grid(&f->form);
+	free_grid(&f->grid);
+	ft_memdel((void **)line);
+	write(1, "0 0\n", 4);
+	return (0);
+}
 
-	p.touch = 0;
-    p.c = 0;
-	p.x_center = n % vm_data->psize_x;
-	p.y_center = n / vm_data->psize_x;
-	p.x_i = i % vm_data->mapsize_x;
-	p.y_i = i / vm_data->mapsize_x;
-	while ((vm_data->piece)[p.c])
+void	fill_line(t_grid *grid, int id, char *s)
+{
+	while (ft_isdigit(*s))
+		s++;
+	ft_memcpy(grid->g[id], ++s, grid->wid * sizeof(char));
+}
+
+int		read_grid(t_grid *grid, char **line)
+{
+	int	i;
+	int	j;
+
+	j = -1;
+	while (++j < 50000000)
+		;
+	if (!read_line(line))
+		return (0);
+	if (!read_line(line))
+		return (0);
+	i = -1;
+	while (++i < grid->hig)
 	{
-		if ((vm_data->piece)[p.c] == '*')
-		{
-			p.x_pos = p.x_i + ((p.c % vm_data->psize_x) - p.x_center);
-			p.y_pos = p.y_i + ((p.c / vm_data->psize_x) - p.y_center);
-			if ((p.y_pos * vm_data->mapsize_x) + p.x_pos < 0)
-				return (0);
-			if (test_piece_algo(&p, vm_data) == 0)
-				return (0);
-		}
-		p.c++;
+		if (!read_line(line))
+			return (0);
+		fill_line(grid, i, *line);
+	}
+	return (1);
+}
+
+int		read_line(char **line)
+{
+	int	ret;
+
+	while ((ret = get_next_line(0, line)) != 2)
+	{
+		if (ret == -1)
+			return (0);
 	}
 	return (1);
 }
